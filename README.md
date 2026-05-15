@@ -1,16 +1,29 @@
-# React + Vite
+# 🚀 SocialBlog - Front-end (Tech Challenge)
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+Este é o front-end do projeto SocialBlog, desenvolvido com **React + Vite** e estilizado com **Tailwind CSS v4**.
 
-Currently, two official plugins are available:
+## 🛠️ Tecnologias Utilizadas
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Oxc](https://oxc.rs)
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/)
+- **React**: Biblioteca principal.
+- **Lucide React**: Ícones da interface.
+- **Tailwind CSS**: Estilização moderna e responsiva.
+- **LocalStorage**: Persistência de dados em memória local (Simulação de DB).
 
-## React Compiler
+## 📋 Funcionalidades Implementadas
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
+- [x] Criação de publicações.
+- [x] Exclusão de publicações (apenas pelo autor).
+- [x] Sistema de Curtidas (Likes).
+- [x] Comentários com função de **Editar**.
+- [x] Persistência de dados ao recarregar a página.
 
-## Expanding the ESLint configuration
+## 🏃 Como rodar o projeto localmente
 
-If you are developing a production application, we recommend using TypeScript with type-aware lint rules enabled. Check out the [TS template](https://github.com/vitejs/vite/tree/main/packages/create-vite/template-react-ts) for information on how to integrate TypeScript and [`typescript-eslint`](https://typescript-eslint.io) in your project.
+1. Clone o repositório:
+   `git clone https://github.com/Vint000/social-blog-frontend.git`
+2. Entre na pasta:
+   `cd social-blog-frontend`
+3. Instale as dependências:
+   `npm install`
+4. Inicie o servidor de desenvolvimento:
+   `npm run dev`
