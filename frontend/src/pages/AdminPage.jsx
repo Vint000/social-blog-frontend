@@ -8,6 +8,8 @@ export default function AdminPage() {
   const [posts, setPosts] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
+  // ID do post aguardando confirmação de exclusão (null = modal fechado)
+  const [confirmDeleteId, setConfirmDeleteId] = useState(null);
 
   const navigate = useNavigate();
   const { logout } = useAuth();
@@ -20,15 +22,15 @@ export default function AdminPage() {
       .finally(() => setLoading(false));
   }, []);
 
-  // Confirma e executa exclusão, remove do estado local em caso de sucesso
-  async function handleDelete(id) {
-    if (!window.confirm('Excluir este post?')) return;
+  // Executa exclusão após confirmação no modal
+  async function handleDeleteConfirm() {
+    const id = confirmDeleteId;
+    setConfirmDeleteId(null);
     try {
       await api.deletePost(id);
       setPosts((prev) => prev.filter((p) => p.id !== id));
     } catch (err) {
       console.error('Erro ao excluir post:', err);
-      alert('Erro ao excluir post');
     }
   }
 
@@ -48,6 +50,30 @@ export default function AdminPage() {
 
   return (
     <div className="max-w-4xl mx-auto p-8">
+
+      {/* Modal de confirmação de exclusão */}
+      {confirmDeleteId && (
+        <div className="fixed inset-0 bg-black/40 flex items-center justify-center z-50">
+          <div className="bg-white rounded-lg shadow-xl p-6 max-w-sm w-full mx-4">
+            <h2 className="text-lg font-semibold text-gray-900 mb-2">Excluir post</h2>
+            <p className="text-gray-600 mb-6">Tem certeza? Esta ação não pode ser desfeita.</p>
+            <div className="flex justify-end gap-3">
+              <button
+                onClick={() => setConfirmDeleteId(null)}
+                className="px-4 py-2 rounded bg-gray-100 text-gray-700 hover:bg-gray-200 transition"
+              >
+                Cancelar
+              </button>
+              <button
+                onClick={handleDeleteConfirm}
+                className="px-4 py-2 rounded bg-red-600 text-white hover:bg-red-700 transition"
+              >
+                Excluir
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
       {/* Cabeçalho com título e ações globais */}
       <div className="flex items-center justify-between mb-6">
         <h1 className="text-2xl font-bold text-gray-800">Painel do Professor</h1>
@@ -91,7 +117,7 @@ export default function AdminPage() {
                   Editar
                 </button>
                 <button
-                  onClick={() => handleDelete(post.id)}
+                  onClick={() => setConfirmDeleteId(post.id)}
                   className="text-sm bg-red-100 text-red-700 px-3 py-1 rounded hover:bg-red-200 transition"
                 >
                   Excluir
