@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useRef } from 'react';
 import { api } from '../services/api';
 import Header from '../components/Header';
 import PostCard from '../components/PostCard';
@@ -9,28 +9,48 @@ import ErrorMessage from '../components/ErrorMessage';
 function HomePage() {
   const [term, setTerm] = useState('');
   const [posts, setPosts] = useState([]);
-  const [loading, setLoading] = useState(true);
+  const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
+  // hasFetched: evita flash de "Nenhum post disponível" antes do primeiro fetch
+  const hasFetched = useRef(false);
+  // showSpinner: spinner com delay 200ms apenas na carga inicial (não durante busca)
+  const [showSpinner, setShowSpinner] = useState(false);
+  const spinnerTimer = useRef(null);
 
   useEffect(() => {
+    // Cancela spinner anterior ao trocar term
+    clearTimeout(spinnerTimer.current);
+    setShowSpinner(false);
+
+    // Spinner só na carga inicial (hasFetched=false) e após 200ms — igual ao PostPage
+    if (!hasFetched.current) {
+      spinnerTimer.current = setTimeout(() => setShowSpinner(true), 200);
+    }
+
     // Debounce: aguarda 400ms após última digitação antes de chamar API
     const timer = setTimeout(async () => {
-      setLoading(true);
       setError(null);
       try {
         const data = term.trim()
           ? await api.searchPosts(term)
           : await api.getPosts();
+        hasFetched.current = true;
+        setShowSpinner(false);
         setPosts(data);
       } catch (err) {
+        hasFetched.current = true;
+        setShowSpinner(false);
         setError(err.message);
       } finally {
         setLoading(false);
       }
     }, 400);
 
-    // Cleanup: cancela timer se term mudar antes dos 400ms
-    return () => clearTimeout(timer);
+    // Cleanup: cancela timers se term mudar antes dos 400ms
+    return () => {
+      clearTimeout(timer);
+      clearTimeout(spinnerTimer.current);
+    };
   }, [term]);
 
   return (
@@ -44,11 +64,11 @@ function HomePage() {
           <SearchInput value={term} onChange={setTerm} />
         </div>
 
-        {loading && <LoadingSpinner />}
+        {showSpinner && <LoadingSpinner />}
 
         {!loading && error && <ErrorMessage message={error} />}
 
-        {!loading && !error && posts.length === 0 && (
+        {!loading && !error && posts.length === 0 && hasFetched.current && (
           <p className="text-center text-gray-500 py-12">
             {term ? `Nenhum post encontrado para "${term}".` : 'Nenhum post disponível.'}
           </p>

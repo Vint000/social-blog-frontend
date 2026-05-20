@@ -6,5 +6,9 @@ export default defineConfig({
   server: {
     host: '0.0.0.0',
     port: 5173,
+    watch: {
+      usePolling: true,   // necessário no WSL2: inotify não dispara para mudanças do host Windows
+      interval: 500,
+    },
   },
 })

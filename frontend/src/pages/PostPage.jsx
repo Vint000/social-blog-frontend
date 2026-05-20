@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useRef } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
 import { api } from '../services/api';
 import Header from '../components/Header';
@@ -9,27 +9,41 @@ function PostPage() {
   const { id } = useParams();
   const navigate = useNavigate();
   const [post, setPost] = useState(null);
-  const [loading, setLoading] = useState(true);
+  const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
+  const spinnerTimer = useRef(null);
 
   useEffect(() => {
-    // Flag cancelled: evita setState após desmontagem do componente
-    let cancelled = false;
-    setLoading(true);
+    // Evita setState após desmontagem do componente
+    let cancelado = false;
+    setPost(null);
     setError(null);
+
+    // Spinner só aparece se fetch demorar mais de 200ms (evita flash em localhost)
+    spinnerTimer.current = setTimeout(() => {
+      if (!cancelado) setLoading(true);
+    }, 200);
 
     api.getPost(id)
       .then((data) => {
-        if (!cancelled) setPost(data);
+        if (!cancelado) {
+          clearTimeout(spinnerTimer.current);
+          setLoading(false);
+          setPost(data);
+        }
       })
       .catch((err) => {
-        if (!cancelled) setError(err.message);
-      })
-      .finally(() => {
-        if (!cancelled) setLoading(false);
+        if (!cancelado) {
+          clearTimeout(spinnerTimer.current);
+          setLoading(false);
+          setError(err.message);
+        }
       });
 
-    return () => { cancelled = true; };
+    return () => {
+      cancelado = true;
+      clearTimeout(spinnerTimer.current);
+    };
   }, [id]);
 
   const dataFormatada = post?.createdAt
@@ -46,7 +60,7 @@ function PostPage() {
 
       <main className="max-w-2xl mx-auto px-4 py-8">
         <button
-          onClick={() => navigate(-1)}
+          onClick={() => navigate(window.history.state?.idx > 0 ? -1 : '/')}
           className="flex items-center gap-1 text-blue-600 hover:text-blue-800 mb-6 transition"
         >
           ← Voltar
