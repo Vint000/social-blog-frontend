@@ -5,11 +5,9 @@ import NotFoundPage from './pages/NotFoundPage';
 import LoginPage from './pages/LoginPage';
 import AdminPage from './pages/AdminPage';
 import NewPostPage from './pages/NewPostPage';
+import EditPostPage from './pages/EditPostPage';
 import { AuthProvider } from './contexts/AuthContext';
 import ProtectedRoute from './components/ProtectedRoute';
-
-// Placeholder — substituído no plano 03-03
-const EditPostPage = () => <div className="p-8">Editar post — em breve</div>;
 
 function App() {
   return (
