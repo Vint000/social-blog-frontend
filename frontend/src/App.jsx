@@ -2,14 +2,37 @@ import { Routes, Route } from 'react-router-dom';
 import HomePage from './pages/HomePage';
 import PostPage from './pages/PostPage';
 import NotFoundPage from './pages/NotFoundPage';
+import LoginPage from './pages/LoginPage';
+import { AuthProvider } from './contexts/AuthContext';
+import ProtectedRoute from './components/ProtectedRoute';
+
+// Placeholders — substituídos nos planos 03-02 e 03-03
+const AdminPage = () => <div className="p-8">Área admin — em breve</div>;
+const NewPostPage = () => <div className="p-8">Criar post — em breve</div>;
+const EditPostPage = () => <div className="p-8">Editar post — em breve</div>;
 
 function App() {
   return (
-    <Routes>
-      <Route path="/" element={<HomePage />} />
-      <Route path="/posts/:id" element={<PostPage />} />
-      <Route path="*" element={<NotFoundPage />} />
-    </Routes>
+    <AuthProvider>
+      <Routes>
+        <Route path="/" element={<HomePage />} />
+        <Route path="/posts/:id" element={<PostPage />} />
+        <Route path="/login" element={<LoginPage />} />
+        <Route
+          path="/admin"
+          element={<ProtectedRoute><AdminPage /></ProtectedRoute>}
+        />
+        <Route
+          path="/admin/posts/new"
+          element={<ProtectedRoute><NewPostPage /></ProtectedRoute>}
+        />
+        <Route
+          path="/admin/posts/:id/edit"
+          element={<ProtectedRoute><EditPostPage /></ProtectedRoute>}
+        />
+        <Route path="*" element={<NotFoundPage />} />
+      </Routes>
+    </AuthProvider>
   );
 }
 
