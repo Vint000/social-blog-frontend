@@ -42,9 +42,9 @@ export default function NewPostPage() {
         <h1 className="text-2xl font-bold text-gray-800">Novo Post</h1>
         <button
           onClick={() => navigate('/admin')}
-          className="text-sm text-gray-500 hover:text-gray-700 underline"
+          className="flex items-center gap-1 text-blue-600 hover:text-blue-800 transition"
         >
-          Voltar
+          ← Voltar
         </button>
       </div>
 
