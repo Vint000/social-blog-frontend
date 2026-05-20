@@ -4,15 +4,15 @@ import { createContext, useState } from 'react';
 export const AuthContext = createContext(null);
 
 export function AuthProvider({ children }) {
-  // Inicializa lendo sessionStorage para persistir entre reloads
+  // Inicializa lendo localStorage para persistir entre abas e sessões
   const [isAuthenticated, setIsAuthenticated] = useState(
-    sessionStorage.getItem('auth') === 'true'
+    localStorage.getItem('auth') === 'true'
   );
 
   // Verifica credenciais hardcoded e persiste sessão
   function login(email, password) {
     if (email === 'professor@escola.com' && password === 'senha123') {
-      sessionStorage.setItem('auth', 'true');
+      localStorage.setItem('auth', 'true');
       setIsAuthenticated(true);
       return true;
     }
@@ -21,7 +21,7 @@ export function AuthProvider({ children }) {
 
   // Limpa sessão e estado
   function logout() {
-    sessionStorage.removeItem('auth');
+    localStorage.removeItem('auth');
     setIsAuthenticated(false);
   }
 
