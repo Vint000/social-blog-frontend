@@ -61,14 +61,18 @@ function PostPage() {
       <main className="max-w-2xl mx-auto px-4 py-8">
         <button
           onClick={() => navigate(window.history.state?.idx > 0 ? -1 : '/')}
-          className="flex items-center gap-1 text-blue-600 hover:text-blue-800 mb-6 transition"
+          className="inline-flex items-center gap-1 text-blue-600 hover:text-blue-800 border border-blue-200 hover:border-blue-400 rounded px-3 py-1 mb-6 transition focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-blue-500"
         >
-          ← Voltar
+          <span aria-hidden="true">←</span> Voltar
         </button>
 
         {loading && <LoadingSpinner />}
 
         {!loading && error && <ErrorMessage message={error} />}
+
+        {!loading && !error && !post && (
+          <p className="text-center text-gray-500 py-12">Post não encontrado.</p>
+        )}
 
         {!loading && !error && post && (
           <article>

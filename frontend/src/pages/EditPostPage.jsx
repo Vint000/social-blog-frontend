@@ -3,6 +3,7 @@ import { useParams, useNavigate } from 'react-router-dom';
 import { api } from '../services/api';
 import Header from '../components/Header';
 import LoadingSpinner from '../components/LoadingSpinner';
+import ErrorMessage from '../components/ErrorMessage';
 
 // Página de edição de post existente — carrega dados via GET, salva via PUT
 export default function EditPostPage() {
@@ -79,14 +80,12 @@ export default function EditPostPage() {
       <div className="min-h-screen bg-gray-50">
         <Header />
         <div className="max-w-2xl mx-auto p-8">
-          <p className="mb-4 text-red-600 bg-red-50 border border-red-200 rounded p-3">
-            Erro ao carregar post. Ele pode ter sido removido.
-          </p>
+          <ErrorMessage message="Erro ao carregar post. Ele pode ter sido removido." />
           <button
             onClick={() => navigate('/admin')}
-            className="flex items-center gap-1 text-blue-600 hover:text-blue-800 transition focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-blue-500 rounded"
+            className="inline-flex items-center gap-1 text-blue-600 hover:text-blue-800 border border-blue-200 hover:border-blue-400 rounded px-3 py-1 transition focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-blue-500"
           >
-            ← Voltar
+            <span aria-hidden="true">←</span> Voltar
           </button>
         </div>
       </div>
@@ -103,9 +102,9 @@ export default function EditPostPage() {
           <h1 className="text-2xl font-bold text-gray-800">Editar Post</h1>
           <button
             onClick={() => navigate('/admin')}
-            className="flex items-center gap-1 text-blue-600 hover:text-blue-800 transition focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-blue-500 rounded"
+            className="inline-flex items-center gap-1 text-blue-600 hover:text-blue-800 border border-blue-200 hover:border-blue-400 rounded px-3 py-1 transition focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-blue-500"
           >
-            ← Voltar
+            <span aria-hidden="true">←</span> Voltar
           </button>
         </div>
 

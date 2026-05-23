@@ -46,9 +46,9 @@ export default function NewPostPage() {
           <h1 className="text-2xl font-bold text-gray-800">Novo Post</h1>
           <button
             onClick={() => navigate('/admin')}
-            className="flex items-center gap-1 text-blue-600 hover:text-blue-800 transition focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-blue-500 rounded"
+            className="inline-flex items-center gap-1 text-blue-600 hover:text-blue-800 border border-blue-200 hover:border-blue-400 rounded px-3 py-1 transition focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-blue-500"
           >
-            ← Voltar
+            <span aria-hidden="true">←</span> Voltar
           </button>
         </div>
 

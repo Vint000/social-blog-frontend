@@ -39,7 +39,7 @@ export default function LoginPage() {
   return (
     <div className="min-h-screen flex items-center justify-center bg-gray-50 px-4">
       <div className="w-full max-w-md">
-        <p className="text-center text-2xl font-bold text-blue-700 mb-6 tracking-tight">
+        <p className="text-center text-2xl font-bold text-blue-600 mb-6 tracking-tight">
           Blog EducaMais
         </p>
       <div className="bg-white rounded-2xl shadow-md p-8">

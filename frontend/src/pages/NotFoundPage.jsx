@@ -6,7 +6,7 @@ function NotFoundPage() {
     <div className="min-h-screen bg-gray-50">
       <Header />
       <main className="max-w-2xl mx-auto px-4 py-16 text-center">
-        <h1 className="text-3xl font-bold text-gray-300 mb-4">404</h1>
+        <h1 className="text-3xl font-bold text-gray-500 mb-4">404</h1>
         <p className="text-lg text-gray-600 mb-6">Página não encontrada</p>
         <Link
           to="/"
