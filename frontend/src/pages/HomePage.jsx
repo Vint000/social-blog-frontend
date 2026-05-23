@@ -58,7 +58,7 @@ function HomePage() {
       <Header />
 
       <main className="max-w-4xl mx-auto px-4 py-8">
-        <h1 className="text-2xl font-bold text-gray-900 mb-6">Posts</h1>
+        <h1 className="text-2xl font-bold text-gray-900 mb-6">Publicações</h1>
 
         <div className="mb-6">
           <SearchInput value={term} onChange={setTerm} />

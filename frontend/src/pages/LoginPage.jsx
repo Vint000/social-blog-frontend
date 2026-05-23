@@ -34,8 +34,12 @@ export default function LoginPage() {
 
   return (
     <div className="min-h-screen flex items-center justify-center bg-gray-50 px-4">
-      <div className="w-full max-w-md bg-white rounded-2xl shadow-md p-8">
-        <h1 className="text-2xl font-bold text-gray-800 mb-6 text-center">
+      <div className="w-full max-w-md">
+        <p className="text-center text-2xl font-bold text-blue-700 mb-6 tracking-tight">
+          Blog EducaMais
+        </p>
+      <div className="bg-white rounded-2xl shadow-md p-8">
+        <h1 className="text-xl font-bold text-gray-800 mb-6 text-center">
           Acesso do Professor
         </h1>
 
@@ -87,6 +91,7 @@ export default function LoginPage() {
             {submitting ? 'Entrando...' : 'Entrar'}
           </button>
         </form>
+      </div>
       </div>
     </div>
   );

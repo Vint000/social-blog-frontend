@@ -8,9 +8,11 @@ import NewPostPage from './pages/NewPostPage';
 import EditPostPage from './pages/EditPostPage';
 import { AuthProvider } from './contexts/AuthContext';
 import ProtectedRoute from './components/ProtectedRoute';
+import ErrorBoundary from './components/ErrorBoundary';
 
 function App() {
   return (
+    <ErrorBoundary>
     <AuthProvider>
       <Routes>
         <Route path="/" element={<HomePage />} />
@@ -31,6 +33,7 @@ function App() {
         <Route path="*" element={<NotFoundPage />} />
       </Routes>
     </AuthProvider>
+    </ErrorBoundary>
   );
 }
 

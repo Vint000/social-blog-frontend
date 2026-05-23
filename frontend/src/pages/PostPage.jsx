@@ -78,7 +78,7 @@ function PostPage() {
             <p className="text-gray-500 text-sm mb-6">
               Por {post.author} · {dataFormatada}
             </p>
-            <div className="prose prose-gray max-w-none">
+            <div className="max-w-none">
               <p className="text-gray-800 leading-relaxed whitespace-pre-wrap">
                 {post.content}
               </p>
