@@ -22,10 +22,8 @@ function HomePage() {
     clearTimeout(spinnerTimer.current);
     setShowSpinner(false);
 
-    // Spinner só na carga inicial (hasFetched=false) e após 200ms — igual ao PostPage
-    if (!hasFetched.current) {
-      spinnerTimer.current = setTimeout(() => setShowSpinner(true), 200);
-    }
+    // Spinner com delay 200ms em todas as cargas (inicial e buscas)
+    spinnerTimer.current = setTimeout(() => setShowSpinner(true), 200);
 
     // Debounce: aguarda 400ms após última digitação antes de chamar API
     const timer = setTimeout(async () => {
@@ -58,7 +56,7 @@ function HomePage() {
       <Header />
 
       <main className="max-w-4xl mx-auto px-4 py-8">
-        <h1 className="text-2xl font-bold text-gray-900 mb-6">Publicações</h1>
+        <h1 className="text-2xl font-bold text-gray-900 mb-3">Publicações</h1>
 
         <div className="mb-6">
           <SearchInput value={term} onChange={setTerm} />

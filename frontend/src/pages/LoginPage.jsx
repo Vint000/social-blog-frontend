@@ -1,4 +1,5 @@
 import { useState } from 'react';
+import { flushSync } from 'react-dom';
 import { Navigate, useNavigate } from 'react-router-dom';
 import { useAuth } from '../hooks/useAuth';
 
@@ -16,10 +17,13 @@ export default function LoginPage() {
     return <Navigate to="/admin" replace />;
   }
 
-  async function handleSubmit(e) {
+  function handleSubmit(e) {
     e.preventDefault();
-    setError('');
-    setSubmitting(true);
+    // flushSync: força render do estado "Entrando..." antes do login() síncrono
+    flushSync(() => {
+      setError('');
+      setSubmitting(true);
+    });
 
     const success = login(email, password);
 
@@ -39,7 +43,7 @@ export default function LoginPage() {
           Blog EducaMais
         </p>
       <div className="bg-white rounded-2xl shadow-md p-8">
-        <h1 className="text-xl font-bold text-gray-800 mb-6 text-center">
+        <h1 className="text-lg font-bold text-gray-800 mb-6 text-center">
           Acesso do Professor
         </h1>
 
