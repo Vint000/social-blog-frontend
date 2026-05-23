@@ -12,7 +12,7 @@ function PostCard({ post }) {
   return (
     <Link
       to={`/posts/${post.id}`}
-      className="block bg-white rounded-xl shadow-sm border border-gray-200 p-4 hover:border-blue-400 hover:shadow-md transition"
+      className="block bg-white rounded-xl shadow-sm border border-gray-200 p-3 sm:p-4 hover:border-blue-400 hover:shadow-md transition"
     >
       <h2 className="text-lg font-semibold text-gray-900 mb-1 line-clamp-2">
         {post.title}
