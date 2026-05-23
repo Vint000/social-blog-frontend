@@ -1,5 +1,7 @@
 # Blog EducaMais — Tech Challenge Fase 03
 
+![CI](https://github.com/Vint000/social-blog-frontend/actions/workflows/ci.yml/badge.svg)
+
 > Plataforma educacional onde professores publicam e gerenciam posts; alunos leem e buscam conteúdo.
 
 ## Descrição
