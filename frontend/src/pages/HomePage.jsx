@@ -18,12 +18,16 @@ function HomePage() {
   const spinnerTimer = useRef(null);
 
   useEffect(() => {
+    let cancelled = false;
+
     // Cancela spinner anterior ao trocar term
     clearTimeout(spinnerTimer.current);
     setShowSpinner(false);
 
     // Spinner com delay 200ms em todas as cargas (inicial e buscas)
-    spinnerTimer.current = setTimeout(() => setShowSpinner(true), 200);
+    spinnerTimer.current = setTimeout(() => {
+      if (!cancelled) setShowSpinner(true);
+    }, 200);
 
     // Debounce: aguarda 400ms após última digitação antes de chamar API
     const timer = setTimeout(async () => {
@@ -32,20 +36,25 @@ function HomePage() {
         const data = term.trim()
           ? await api.searchPosts(term)
           : await api.getPosts();
-        hasFetched.current = true;
-        setShowSpinner(false);
-        setPosts(data);
+        if (!cancelled) {
+          hasFetched.current = true;
+          setShowSpinner(false);
+          setPosts(data);
+        }
       } catch (err) {
-        hasFetched.current = true;
-        setShowSpinner(false);
-        setError(err.message);
+        if (!cancelled) {
+          hasFetched.current = true;
+          setShowSpinner(false);
+          setError(err.message);
+        }
       } finally {
-        setLoading(false);
+        if (!cancelled) setLoading(false);
       }
     }, 400);
 
-    // Cleanup: cancela timers se term mudar antes dos 400ms
+    // Cleanup: marca stale + cancela timers se term mudar antes dos 400ms
     return () => {
+      cancelled = true;
       clearTimeout(timer);
       clearTimeout(spinnerTimer.current);
     };
