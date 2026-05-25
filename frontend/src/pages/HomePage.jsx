@@ -24,10 +24,12 @@ function HomePage() {
     clearTimeout(spinnerTimer.current);
     setShowSpinner(false);
 
-    // Spinner com delay 200ms em todas as cargas (inicial e buscas)
-    spinnerTimer.current = setTimeout(() => {
-      if (!cancelled) setShowSpinner(true);
-    }, 200);
+    // Spinner com delay 200ms apenas na carga inicial (não durante buscas)
+    if (!hasFetched.current) {
+      spinnerTimer.current = setTimeout(() => {
+        if (!cancelled) setShowSpinner(true);
+      }, 200);
+    }
 
     // Debounce: aguarda 400ms após última digitação antes de chamar API
     const timer = setTimeout(async () => {
